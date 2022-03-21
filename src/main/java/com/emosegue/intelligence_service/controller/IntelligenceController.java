@@ -15,15 +15,11 @@ import com.emosegue.intelligence_service.exception.NotInformationException;
 import com.emosegue.intelligence_service.model.Position;
 import com.emosegue.intelligence_service.model.Satellite;
 import com.emosegue.intelligence_service.model.repository.SpaceRepository;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,9 +30,9 @@ import java.util.List;
 @RequestMapping(path = "/")
 public class IntelligenceController {
 
-    private LocationService locationService;
-    private MessageService  messageService;
-    private SpaceRepository space;
+    private final LocationService locationService;
+    private final MessageService  messageService;
+    private final SpaceRepository space;
 
     public IntelligenceController(LocationService locationService, MessageService messageService, SpaceRepository space) {
         this.locationService = locationService;
@@ -44,8 +40,8 @@ public class IntelligenceController {
         this.space = space;
     }
 
-    @PostMapping(path = "/topsecret")
-    public SatellitesResponse receiveAndDecodeData(@RequestBody SatellitesData requestData){
+    @PostMapping(path = "intelligenceservice/v1/topsecret")
+    public SatellitesResponse receiveAndDecodeInformation(@RequestBody SatellitesData requestData){
         List<Satellite> quasarSpace = space.getSatellites();
         double[][] positionList = new double[quasarSpace.size()][2];
         double[] distances = new double[quasarSpace.size()];
@@ -64,8 +60,8 @@ public class IntelligenceController {
         return new SatellitesResponse(calculatedPosition, decodedMessage);
     }
 
-    @GetMapping(path = "/topsecret_split")
-    public SatellitesResponse DecodeData(){
+    @GetMapping(path = "intelligenceservice/v1/topsecret_split")
+    public SatellitesResponse decodeInformation(){
         if(checkDecodeConditions()){
             List<Satellite> quasarSpace = space.getSatellites();
             double[][] positionList = new double[quasarSpace.size()][2];
@@ -96,9 +92,9 @@ public class IntelligenceController {
         return true;
     }
 
-    @PostMapping(path = "/topsecret_split/{satellite_name}")
+    @PostMapping(path = "intelligenceservice/v1/topsecret_split/{satellite_name}")
     @ResponseStatus(HttpStatus.OK)
-    public void ReceiveData(@RequestBody SatelliteData requestData, @PathVariable String satellite_name) {
+    public void receiveInformation(@RequestBody SatelliteData requestData, @PathVariable String satellite_name) {
         Satellite targetSatellite = space.getSatelliteDataByName(satellite_name);
         if (targetSatellite != null){
             targetSatellite.setDistance(requestData.getDistance());
@@ -109,36 +105,35 @@ public class IntelligenceController {
         }
     }
 
-    @GetMapping(path = "/test")
-    public SatellitesResponse test() throws LocationException, MessageException {
+    @GetMapping(path = "intelligenceservice/v1/test")
+    public String test() throws LocationException, MessageException {
 
-        checkDecodeConditions();
-        Position calculatedPosition = locationService.getLocation(new double[][]{{1.0, 1.0}, {3.0, 1.0}, {2.0, 2.0}}, new double[]{1.0, 1.0, 1.0});
-        List<List<String>> messageList = new ArrayList<>();
-        List<String> message1 = new ArrayList<>();
-        message1.add("");
-        message1.add("este");
-        message1.add("es");
-        message1.add("un");
-        message1.add("mensaje");
-        List<String> message2 = new ArrayList<>();
-        message2.add("este");
-        message2.add("");
-        message2.add("un");
-        message2.add("mensaje");
-        List<String> message3 = new ArrayList<>();
-        message3.add("");
-        message3.add("");
-        message3.add("este");
-        message3.add("");
-        message3.add("");
-        message3.add("mensaje");
+        String serviceWorkingtext = "El servicio de inteligencia funciona correctamente! ";
+        String htmlCircle = "<span class='dot blink'>\n" +
+                "<style>\n" +
+                ".dot{\n" +
+                "\tbackground-color: green;\n" +
+                "\theight:25px;\n" +
+                "\twidth:25px;\n" +
+                "\tborder-radius:50%;\n" +
+                "\tdisplay:inline-block;\n" +
+                "\t}\n" +
+                ".blink {\n" +
+                "  animation: blink 1s steps(1, end) infinite;\n" +
+                "}\n" +
+                "\n" +
+                "@keyframes blink {\n" +
+                "  0% {\n" +
+                "    opacity: 1;}" +
+                "  50% {\n" +
+                "    opacity: 0;}" +
+                "  100% {\n" +
+                "    opacity: 1;}" +
+                "}\n" +
+                "</style>\n" +
+                "</span>";
 
-        messageList.add(message1);
-        messageList.add(message2);
-        messageList.add(message3);
-        String decodedMessage = messageService.getMessage(messageList);
-        return new SatellitesResponse(calculatedPosition, decodedMessage);
+        return "<html><div><h1>" + serviceWorkingtext + htmlCircle +"</h1></div></html>";
     }
 
 }

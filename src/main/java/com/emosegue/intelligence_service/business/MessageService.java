@@ -19,25 +19,25 @@ public class MessageService {
      * @return String de palabras que componen el mensaje secreto concatenadas mediante un "blanco".
      */
     public String getMessage(List<List<String>> messageList) throws MessageException {
-        List<String> distinctWords = getDistinctWords(messageList);
-        if (!checkMessageSize(messageList, distinctWords)) {
+        List<String> distinctWordsList = getDistinctWords(messageList);
+        if (!isValidMessageSize(messageList, distinctWordsList)) {
             throw new MessageException("La estructura de los mensajes es inválida, no es posible decodificarlo");
         }
-        List<List<String>> messageListWithoutOffset = removeOffset(messageList, distinctWords.size());
-        return decodeMessage(messageListWithoutOffset);
+        List<List<String>> messageListWithoutLTrim = removeLTrim(messageList, distinctWordsList.size());
+        return decodeMessage(messageListWithoutLTrim);
     }
 
     /**
      * Metodo para decodificar el mensaje luego de intentar detectar errores en instancias previas
      *
-     * @param messageListProcessed lista que contiene en cada posicion una lista de palabras ya procesada
+     * @param messageProcessedList lista que contiene en cada posicion una lista de palabras ya procesada
      * @return String de palabras que componen el mensaje secreto concatenadas mediante un "blanco".
      */
-    private static String decodeMessage(List<List<String>> messageListProcessed) {
+    private static String decodeMessage(List<List<String>> messageProcessedList) {
         List<String> decodedMessage = new ArrayList<>();
         String word;
-        for (int i = 0; i < messageListProcessed.get(0).size(); i++) {
-            for (List<String> message : messageListProcessed) {
+        for (int i = 0; i < messageProcessedList.get(0).size(); i++) {
+            for (List<String> message : messageProcessedList) {
                 word = message.get(i);
                 if (!"".equals(word) && !decodedMessage.contains(word))
                     decodedMessage.add(word);
@@ -64,18 +64,18 @@ public class MessageService {
     }
 
     /**
-     * Metodo para eliminar el offset en el mensaje, primero lo detecto y luego delego el borrado en el submetodo removeElementUsingCollection
+     * Metodo para eliminar el left trim en el mensaje en aquellos casos que sea posible.
      *
      * @param messageList lista que contiene en cada posicion una lista de palabras
-     * @param offset      el valor posible a eliminar
+     * @param numberOfDistinctWords  numero de palabras no repetidas entre todos los mensajes
      */
-    private List<List<String>> removeOffset(List<List<String>> messageList, int offset) {
+    private List<List<String>> removeLTrim(List<List<String>> messageList, int numberOfDistinctWords) {
         List<List<String>> newList = new ArrayList<>();
         int elementsToRemove;
         for (List<String> message : messageList) {
             elementsToRemove = 0;
             for (String word : message) {
-                if (message.size() > offset && "".equals(word))
+                if (message.size() > numberOfDistinctWords && "".equals(word))
                     elementsToRemove++;
                 else
                     break;
@@ -87,7 +87,6 @@ public class MessageService {
             if (messageClean.size() != numberOfElements)
                 throw new MessageException("La estructura de los mensajes es inválida, no es posible decodificarlo");
         }
-
         return newList;
     }
 
@@ -95,18 +94,17 @@ public class MessageService {
      * Metodo para determinar si los mensajes enviados, son coherentes con el posible tamaño del mensaje
      *
      * @param messageList    lista que contiene en cada posicion una lista de palabras
-     * @param differentWords lista que contiene todas las palabras no repetidas.
+     * @param differentWordsList lista que contiene todas las palabras no repetidas.
      * @return Regresa true en caso de que sea consistente y false en caso de que haya un error
      */
-    private boolean checkMessageSize(List<List<String>> messageList, List<String> differentWords) {
-        boolean isValidSize = true;
+    private boolean isValidMessageSize(List<List<String>> messageList, List<String> differentWordsList) {
+        boolean isValidMessageSize = true;
         for (List<String> message : messageList) {
-            if (message.size() < differentWords.size()) {
-                isValidSize = false;
+            if (message.size() < differentWordsList.size()) {
+                isValidMessageSize = false;
                 break;
             }
         }
-        return isValidSize;
+        return isValidMessageSize;
     }
-
 }
