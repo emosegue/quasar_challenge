@@ -76,7 +76,7 @@ _Para ejecutar los test generados es necesario ubicarse sobre el directorio raiz
 
 * [Spring Boot](https://spring.io/) - Framework para web apps en Java
 * [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [AWS Elastic Beanstalk](https://aws.amazon.com/es/elasticbeanstalk/) - Servicio Cloud para aplicacionesR
+* [AWS Elastic Beanstalk](https://aws.amazon.com/es/elasticbeanstalk/) - Servicio Cloud para aplicaciones
 
 
 ## Wiki 📖
