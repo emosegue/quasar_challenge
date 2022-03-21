@@ -15,8 +15,6 @@ transporta raciones y armamento para una legión entera_
 
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 
-Mira **Deployment** para conocer como desplegar el proyecto.
-
 
 ### Pre-requisitos 📋
 
@@ -29,7 +27,8 @@ IntelliJ 2021.3 o superior
 
 ### Instalación 🔧
 
-El siguiente instructivo se presenta para un entorno sobre **Windows 10**
+El siguiente instructivo se presenta para un entorno sobre **Windows 10**, aunque en caso de tener algun sistema operativo basado en unix, deberás simplemente reemplazar 
+```.\mvwn.cmd``` por ```.\mvwn```
 
 _En caso de que se quiera lanzar la aplicación desde IntelliJ es necesario seguir los siguientes pasos:_
 
@@ -56,8 +55,6 @@ Para la ejecución de las pruebas asociadas a los métodos del Nivel 1,
 se sugiere ver la estructura de metodos definidos en el directorio de test.
 Para realizar la ejecución, ver la sección de pruebas de este documento.
 
-
-
 ### Nivel 2 y 3
 
 Tanto la ejecución del nivel 2 y 3 pueden realizarse de forma local o de forma remota accediendo a las siguientes URL
@@ -79,11 +76,12 @@ _Para ejecutar los test generados es necesario ubicarse sobre el directorio raiz
 
 * [Spring Boot](https://spring.io/) - Framework para web apps en Java
 * [Maven](https://maven.apache.org/) - Manejador de dependencias
+* [AWS Elastic Beanstalk](https://aws.amazon.com/es/elasticbeanstalk/) - Servicio Cloud para aplicacionesR
 
 
 ## Wiki 📖
 
-Es posible encontrar toda la documentación asociada al proceso de implementación, desiciones de diseño, ejemplos de problemas encontrados en la [Wiki](https://github.com/tu/proyecto/wiki)
+Es posible encontrar toda la documentación asociada al proceso de implementación, desiciones de diseño, ejemplos de problemas encontrados en la [Wiki](https://github.com/emosegue/quasar_challenge/wiki)
 
 ## Autores ✒️
 
