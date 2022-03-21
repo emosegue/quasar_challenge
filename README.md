@@ -14,7 +14,7 @@ transporta raciones y armamento para una legión entera_
 ## Comenzando 🚀
 
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
-
+f
 
 ### Pre-requisitos 📋
 
@@ -44,7 +44,7 @@ _Para esto, ejecutar el comando:_
 .\mvwn.cmd spring-boot:run
 ```
 
-_En este punto es posible acceder al endpoint http://localhost:8080/test para verificar si el servicio está funcionando correctamente._
+_En este punto es posible acceder al endpoint http://localhost:5000/test para verificar si el servicio está funcionando correctamente._
 ![](documents/img_1.png)
 
 ## Ejecucion
