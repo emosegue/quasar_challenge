@@ -87,7 +87,6 @@ Es posible encontrar toda la documentación asociada al proceso de implementaci�
 
 * **Emanuel Mosegue** - *Trabajo Inicial* - [emosegue](https://github.com/emosegue) (emanuelmosegue@gmail.com)
 
-
 ## Licencia 📄
 
 Este proyecto está realizado bajo fines de evaluación como presentación a un challenge backend para MercadoLibre - Marzo 2022
